@@ -1,0 +1,72 @@
+# Warunki Korzystania z Usługi
+
+## 1. Wprowadzenie
+Niniejsze Warunki Korzystania z Usługi (dalej "Warunki") regulują zasady korzystania z aplikacji do wysyłania wiadomości e-mail (dalej "Usługa"). Korzystając z Usługi, Użytkownik potwierdza, że zapoznał się z Warunkami i akceptuje je w całości.
+
+---
+
+## 2. Definicje
+- **Usługa:** Oprogramowanie umożliwiające wysyłanie wiadomości e-mail.
+- **Użytkownik:** Osoba fizyczna lub prawna korzystająca z Usługi.
+- **Administrator:** Właściciel i operator Usługi, odpowiedzialny za jej funkcjonowanie.
+
+---
+
+## 3. Zakres Usługi
+Usługa umożliwia:
+1. Wysyłanie wiadomości e-mail do odbiorców wskazanych w pliku Excel.
+2. Harmonogramowanie wysyłki wiadomości na określoną godzinę.
+3. Wprowadzanie treści wiadomości i załączników.
+
+Administrator zastrzega sobie prawo do modyfikacji funkcjonalności Usługi w dowolnym momencie.
+
+---
+
+## 4. Obowiązki Użytkownika
+1. Użytkownik zobowiązuje się do korzystania z Usługi zgodnie z obowiązującymi przepisami prawa oraz niniejszymi Warunkami.
+2. Użytkownik ponosi pełną odpowiedzialność za treść i załączniki wysyłanych wiadomości.
+3. Zabrania się:
+   - Wykorzystywania Usługi do rozsyłania spamu.
+   - Wysyłania wiadomości zawierających treści niezgodne z prawem, obraźliwe lub naruszające prawa osób trzecich.
+   - Używania Usługi w sposób mogący zakłócić jej funkcjonowanie.
+
+---
+
+## 5. Odpowiedzialność Administratora
+1. Administrator dokłada wszelkich starań, aby Usługa działała poprawnie, ale nie gwarantuje jej bezawaryjnego działania.
+2. Administrator nie ponosi odpowiedzialności za:
+   - Treść wiadomości wysyłanych przez Użytkownika.
+   - Szkody wynikające z niewłaściwego korzystania z Usługi.
+   - Przerwy w działaniu Usługi spowodowane czynnikami zewnętrznymi.
+
+---
+
+## 6. Ochrona Danych Osobowych
+Korzystanie z Usługi wymaga przetwarzania danych osobowych. Szczegóły dotyczące ochrony danych osobowych zawarte są w Polityce Prywatności.
+
+---
+
+## 7. Opłaty i Limity
+1. Usługa jest dostępna bezpłatnie w ramach obowiązujących limitów:
+   - **500 wiadomości e-mail dziennie** dla kont osobistych Gmail.
+   - **2000 wiadomości e-mail dziennie** dla kont Google Workspace.
+2. Przekroczenie tych limitów może skutkować koniecznością wykupienia dodatkowych zasobów.
+
+---
+
+## 8. Rozwiązanie Umowy
+1. Użytkownik może w dowolnym momencie zaprzestać korzystania z Usługi.
+2. Administrator zastrzega sobie prawo do zablokowania dostępu do Usługi w przypadku:
+   - Naruszenia Warunków przez Użytkownika.
+   - Wykorzystywania Usługi w sposób niezgodny z prawem.
+
+---
+
+## 9. Zmiany Warunków
+Administrator zastrzega sobie prawo do zmiany niniejszych Warunków w dowolnym momencie. Użytkownik zostanie poinformowany o zmianach w Usłudze lub za pomocą wiadomości e-mail.
+
+---
+
+## 10. Kontakt
+W przypadku pytań lub wątpliwości dotyczących Warunków prosimy o kontakt na adres e-mail: [adres e-mail Administratora].
+
