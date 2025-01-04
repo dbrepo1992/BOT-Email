@@ -1,47 +1,22 @@
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-import pandas as pd
+import tkinter as tk
+from tkinter import filedialog, messagebox
+import threading
 import schedule
 import time
 from datetime import datetime
+import pandas as pd
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 # Dane logowania do e-maila
 EMAIL = "twoj_email@gmail.com"
 PASSWORD = "twoje_haslo"
 
-# Ścieżki do plików
-PLIK_EXCEL = "lista_maili.xlsx"  # Lista odbiorców
-PLIK_LOGOW = "logi_wysylki.txt"
-PLIK_RAPORTU = "raport_wysylki.xlsx"
-PLIK_TRESCI = "tresc_wiadomosci.txt"  # Treść wiadomości
-
-# Domyślna treść wiadomości
-DOMYSLNA_TRESC = """
-Dzień dobry,
-
-To jest domyślna treść wiadomości. Możesz zmienić ją, edytując plik tresc_wiadomosci.txt.
-
-Pozdrawiamy,
-Zespół Twojej firmy
-"""
-
-# Funkcja do logowania
-def zapisz_log(wiadomosc):
-    with open(PLIK_LOGOW, "a") as log_file:
-        log_file.write(f"{datetime.now()} - {wiadomosc}\n")
-
-# Funkcja do odczytu treści z pliku
-def odczytaj_tresc_z_pliku():
-    try:
-        with open(PLIK_TRESCI, "r") as file:
-            return file.read().strip()
-    except FileNotFoundError:
-        # Jeśli plik nie istnieje, utwórz go z domyślną treścią
-        with open(PLIK_TRESCI, "w") as file:
-            file.write(DOMYSLNA_TRESC)
-        zapisz_log("Plik tresci_wiadomosci.txt został utworzony z domyślną treścią.")
-        return DOMYSLNA_TRESC
+# Globalne zmienne
+plik_excel = ""
+godzina_wysylki = "09:00"
+tresc_wiadomosci = ""
 
 # Funkcja do wysyłania e-maili
 def wyslij_email(odbiorca, temat, tresc):
@@ -57,57 +32,88 @@ def wyslij_email(odbiorca, temat, tresc):
             server.login(EMAIL, PASSWORD)
             server.send_message(msg)
 
-        zapisz_log(f"E-mail wysłany do: {odbiorca}")
-        return "Sukces"
+        print(f"E-mail wysłany do: {odbiorca}")
     except Exception as e:
-        zapisz_log(f"Błąd podczas wysyłania e-maila do {odbiorca}: {e}")
-        return "Błąd"
+        print(f"Błąd podczas wysyłania e-maila do {odbiorca}: {e}")
 
-# Funkcja odczytu danych z pliku Excel i wysyłania e-maili
-def wyslij_maile_z_excela():
+# Funkcja do odczytu danych z pliku Excel i wysyłania e-maili
+def wyslij_maile():
+    if not plik_excel:
+        messagebox.showerror("Błąd", "Nie wybrano pliku Excel!")
+        return
+
     try:
-        # Wczytaj dane z pliku Excel
-        df = pd.read_excel(PLIK_EXCEL)
-
-        # Sprawdź, czy wymagana kolumna istnieje
+        df = pd.read_excel(plik_excel)
         if 'Email' not in df.columns:
-            zapisz_log("Plik Excel musi zawierać kolumnę: 'Email'")
+            messagebox.showerror("Błąd", "Plik Excel musi zawierać kolumnę 'Email'.")
             return
 
-        # Dodaj kolumny na status i czas wysyłki
-        df['Status'] = ""
-        df['Czas wysyłki'] = ""
-
-        # Pobierz treść wiadomości
-        tresc = odczytaj_tresc_z_pliku()
-
-        # Iteracja przez wiersze i wysyłanie e-maili
         temat = "Powiadomienie od Twojej firmy"  # Stały temat
-        for index, row in df.iterrows():
+        for _, row in df.iterrows():
             odbiorca = row['Email']
-            status = wyslij_email(odbiorca, temat, tresc)
-            df.at[index, 'Status'] = status
-            df.at[index, 'Czas wysyłki'] = datetime.now()
+            wyslij_email(odbiorca, temat, tresc_wiadomosci)
 
-        # Zapisz raport wysyłki
-        df.to_excel(PLIK_RAPORTU, index=False)
-        zapisz_log("Raport wysyłki zapisano do pliku.")
-
-    except FileNotFoundError:
-        zapisz_log("Nie znaleziono pliku Excel.")
+        messagebox.showinfo("Sukces", "Wszystkie e-maile zostały wysłane!")
     except Exception as e:
-        zapisz_log(f"Błąd: {e}")
+        messagebox.showerror("Błąd", f"Nie udało się wysłać wiadomości: {e}")
 
-# Funkcja do harmonogramowania
+# Funkcja harmonogramowania
 def uruchom_harmonogram():
-    godzina_wysylki = "09:00"  # Godzina wysyłki w formacie HH:MM
-    schedule.every().day.at(godzina_wysylki).do(wyslij_maile_z_excela)
-    zapisz_log(f"Harmonogram ustawiony na {godzina_wysylki} codziennie.")
-
+    schedule.every().day.at(godzina_wysylki).do(wyslij_maile)
     while True:
         schedule.run_pending()
         time.sleep(1)
 
-# Główna część programu
-if __name__ == "__main__":
-    uruchom_harmonogram()
+# Funkcja uruchamiająca bota w osobnym wątku
+def start_bot():
+    threading.Thread(target=uruchom_harmonogram, daemon=True).start()
+    messagebox.showinfo("Bot uruchomiony", f"Bot wysyłający e-maile uruchomiony na godzinę {godzina_wysylki}.")
+
+# Funkcja wyboru pliku Excel
+def wybierz_plik():
+    global plik_excel
+    plik_excel = filedialog.askopenfilename(filetypes=[("Pliki Excel", "*.xlsx")])
+    if plik_excel:
+        plik_label.config(text=f"Wybrany plik: {plik_excel}")
+
+# Funkcja ustawiania godziny wysyłki
+def ustaw_godzine(event):
+    global godzina_wysylki
+    godzina_wysylki = godzina_dropdown.get()
+
+# Funkcja ustawiania treści wiadomości
+def ustaw_tresc():
+    global tresc_wiadomosci
+    tresc_wiadomosci = tresc_text.get("1.0", tk.END).strip()
+    messagebox.showinfo("Treść ustawiona", "Treść wiadomości została zaktualizowana.")
+
+# Interfejs graficzny
+root = tk.Tk()
+root.title("Bot do wysyłania e-maili")
+
+# Treść wiadomości
+tk.Label(root, text="Treść wiadomości:").pack()
+tresc_text = tk.Text(root, height=10, width=50)
+tresc_text.insert("1.0", "Dzień dobry,\n\nTo jest przykładowa treść wiadomości.")
+tresc_text.pack()
+
+tk.Button(root, text="Zaktualizuj treść", command=ustaw_tresc).pack()
+
+# Wybór pliku Excel
+tk.Button(root, text="Wybierz plik Excel", command=wybierz_plik).pack()
+plik_label = tk.Label(root, text="Nie wybrano pliku.")
+plik_label.pack()
+
+# Wybór godziny wysyłki
+tk.Label(root, text="Wybierz godzinę wysyłki:").pack()
+godziny = [f"{i:02}:00" for i in range(24)]
+godzina_dropdown = tk.StringVar(root)
+godzina_dropdown.set(godzina_wysylki)
+godzina_menu = tk.OptionMenu(root, godzina_dropdown, *godziny, command=ustaw_godzine)
+godzina_menu.pack()
+
+# Start bota
+tk.Button(root, text="Uruchom bota", command=start_bot).pack()
+
+# Uruchomienie aplikacji
+root.mainloop()
