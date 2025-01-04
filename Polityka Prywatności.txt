@@ -1,0 +1,93 @@
+# Polityka Prywatności
+
+## Wstęp
+Niniejsza Polityka Prywatności opisuje, w jaki sposób Twoje dane osobowe są gromadzone, wykorzystywane i chronione podczas korzystania z aplikacji do wysyłania wiadomości e-mail.
+
+---
+
+## Administrator danych
+Administratorem danych osobowych jest właściciel aplikacji (dalej "Administrator"). W przypadku pytań dotyczących przetwarzania danych osobowych, prosimy o kontakt na adres e-mail: [adres e-mail Administratora].
+
+---
+
+## Zakres zbieranych danych
+W celu prawidłowego funkcjonowania aplikacji przetwarzane są następujące dane:
+
+1. **Dane kontaktowe odbiorców:**
+   - Adresy e-mail wprowadzone w pliku Excel.
+
+2. **Dane nadawcy:**
+   - Adres e-mail nadawcy.
+   - Token autoryzacyjny (OAuth2) w celu uwierzytelnienia.
+
+3. **Treść wiadomości e-mail:**
+   - Wprowadzona treść wiadomości.
+   - Opcjonalne załączniki.
+
+---
+
+## Cel przetwarzania danych
+Dane osobowe są przetwarzane w następujących celach:
+
+1. Wysyłanie wiadomości e-mail na podstawie podanych danych.
+2. Zarządzanie treścią wiadomości oraz harmonogramem wysyłki.
+3. Zapewnienie poprawnego działania aplikacji.
+
+Dane nie są wykorzystywane do innych celów, takich jak marketing, bez wyraźnej zgody użytkownika.
+
+---
+
+## Podstawa prawna przetwarzania danych
+Dane są przetwarzane zgodnie z obowiązującymi przepisami prawa, w szczególności:
+
+- Rozporządzenie Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27 kwietnia 2016 r. w sprawie ochrony osób fizycznych w związku z przetwarzaniem danych osobowych (RODO).
+
+Podstawą prawną przetwarzania danych jest zgoda użytkownika oraz realizacja funkcjonalności aplikacji.
+
+---
+
+## Udostępnianie danych
+Dane osobowe nie są udostępniane podmiotom trzecim, z wyjątkiem:
+
+1. Usługodawców zewnętrznych:
+   - **Google** (w celu obsługi OAuth2 i Gmail API).
+
+2. Przypadków wymaganych przepisami prawa.
+
+---
+
+## Bezpieczeństwo danych
+Administrator podejmuje wszelkie niezbędne środki techniczne i organizacyjne w celu ochrony danych osobowych, w tym:
+
+1. Zabezpieczenie tokenów autoryzacyjnych.
+2. Ograniczenie dostępu do plików zawierających dane odbiorców.
+3. Szyfrowanie komunikacji z serwerami (TLS).
+
+---
+
+## Okres przechowywania danych
+Dane są przechowywane wyłącznie przez czas korzystania z aplikacji. Tokeny autoryzacyjne i inne dane wrażliwe są automatycznie usuwane po zakończeniu sesji.
+
+---
+
+## Prawa użytkownika
+Każdy użytkownik ma prawo do:
+
+1. **Dostępu do danych:** Uzyskania informacji o przetwarzanych danych osobowych.
+2. **Sprostowania danych:** Poprawienia nieprawidłowych lub nieaktualnych danych.
+3. **Usunięcia danych:** Żądania usunięcia danych osobowych (prawo do bycia zapomnianym).
+4. **Ograniczenia przetwarzania:** Żądania ograniczenia przetwarzania danych w określonych przypadkach.
+5. **Wycofania zgody:** Wycofania zgody na przetwarzanie danych osobowych w dowolnym momencie.
+
+Aby skorzystać z powyższych praw, prosimy o kontakt na adres e-mail: [adres e-mail Administratora].
+
+---
+
+## Zmiany w Polityce Prywatności
+Administrator zastrzega sobie prawo do zmiany niniejszej Polityki Prywatności w dowolnym momencie. Zmiany zostaną opublikowane w aplikacji. Zaleca się regularne zapoznawanie się z Polityką Prywatności.
+
+---
+
+## Kontakt
+W przypadku pytań dotyczących niniejszej Polityki Prywatności prosimy o kontakt na adres e-mail: [adres e-mail Administratora].
+

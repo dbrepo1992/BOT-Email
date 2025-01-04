@@ -8,6 +8,8 @@ import pandas as pd
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email import encoders
 
 # Dane logowania do e-maila
 EMAIL = "twoj_email@gmail.com"
@@ -15,18 +17,39 @@ PASSWORD = "twoje_haslo"
 
 # Globalne zmienne
 plik_excel = ""
+plik_zalacznik = ""
 godzina_wysylki = "09:00"
 tresc_wiadomosci = ""
+domyslna_stopka = "\n\n---\nPozdrawiam,\nZespół Twojej firmy"
 
-# Funkcja do wysyłania e-maili
-def wyslij_email(odbiorca, temat, tresc):
+# Funkcja do wysyłania e-maili z załącznikami
+def wyslij_email(odbiorca, temat, tresc, zalacznik=None):
     try:
         msg = MIMEMultipart()
         msg['From'] = EMAIL
         msg['To'] = odbiorca
         msg['Subject'] = temat
-        msg.attach(MIMEText(tresc, 'plain'))
 
+        # Dodanie treści wiadomości i stopki
+        tresc_koncowa = tresc + domyslna_stopka
+        msg.attach(MIMEText(tresc_koncowa, 'plain'))
+
+        # Dodanie załącznika, jeśli istnieje
+        if zalacznik:
+            try:
+                with open(zalacznik, 'rb') as attachment_file:
+                    part = MIMEBase('application', 'octet-stream')
+                    part.set_payload(attachment_file.read())
+                encoders.encode_base64(part)
+                part.add_header(
+                    'Content-Disposition',
+                    f'attachment; filename={zalacznik.split("/")[-1]}'
+                )
+                msg.attach(part)
+            except Exception as e:
+                print(f"Błąd przy dodawaniu załącznika: {e}")
+
+        # Wysyłanie wiadomości
         with smtplib.SMTP('smtp.gmail.com', 587) as server:
             server.starttls()
             server.login(EMAIL, PASSWORD)
@@ -51,7 +74,7 @@ def wyslij_maile():
         temat = "Powiadomienie od Twojej firmy"  # Stały temat
         for _, row in df.iterrows():
             odbiorca = row['Email']
-            wyslij_email(odbiorca, temat, tresc_wiadomosci)
+            wyslij_email(odbiorca, temat, tresc_wiadomosci, zalacznik=plik_zalacznik)
 
         messagebox.showinfo("Sukces", "Wszystkie e-maile zostały wysłane!")
     except Exception as e:
@@ -75,6 +98,13 @@ def wybierz_plik():
     plik_excel = filedialog.askopenfilename(filetypes=[("Pliki Excel", "*.xlsx")])
     if plik_excel:
         plik_label.config(text=f"Wybrany plik: {plik_excel}")
+
+# Funkcja wyboru załącznika
+def wybierz_zalacznik():
+    global plik_zalacznik
+    plik_zalacznik = filedialog.askopenfilename()
+    if plik_zalacznik:
+        zalacznik_label.config(text=f"Wybrany załącznik: {plik_zalacznik}")
 
 # Funkcja ustawiania godziny wysyłki
 def ustaw_godzine(event):
@@ -103,6 +133,11 @@ tk.Button(root, text="Zaktualizuj treść", command=ustaw_tresc).pack()
 tk.Button(root, text="Wybierz plik Excel", command=wybierz_plik).pack()
 plik_label = tk.Label(root, text="Nie wybrano pliku.")
 plik_label.pack()
+
+# Wybór załącznika
+tk.Button(root, text="Wybierz załącznik", command=wybierz_zalacznik).pack()
+zalacznik_label = tk.Label(root, text="Nie wybrano załącznika.")
+zalacznik_label.pack()
 
 # Wybór godziny wysyłki
 tk.Label(root, text="Wybierz godzinę wysyłki:").pack()
